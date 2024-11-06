@@ -20,5 +20,8 @@ public class Disease {
     @Column(name = "prescription")
     private String prescription;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="disease_id", referencedColumnName = "id")
+    private Patient patient;
 
 }

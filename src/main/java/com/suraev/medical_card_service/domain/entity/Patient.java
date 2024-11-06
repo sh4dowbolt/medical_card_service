@@ -3,6 +3,8 @@ package com.suraev.medical_card_service.domain.entity;
 import com.suraev.medical_card_service.domain.entity.enums.Sex;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Patient")
 public class Patient {
@@ -18,4 +20,8 @@ public class Patient {
     private String middleName;
     @Column(name="sex")
     private Sex sex;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<Disease> diseaseList;
+
 }
