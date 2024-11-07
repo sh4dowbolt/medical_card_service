@@ -21,6 +21,4 @@ public class CodeDiseaseController {
     public List<CodeDisease> getCodeDiseaseList() {
         return codeDiseaseRepository.findAll();
     }
-
-
 }
