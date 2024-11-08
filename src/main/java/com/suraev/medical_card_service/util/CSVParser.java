@@ -33,10 +33,11 @@ public class CSVParser {
                 result.add(sb.toString());
                 sb = new StringBuilder();
             } else {
-                sb.append(ch);
+              sb.append(ch);
             }
         }
         result.add(sb.toString());
+
         return CodeDisease.builder().id(result.get(2)).titleDisease(result.get(3)).build();
     }
 }

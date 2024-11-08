@@ -15,7 +15,7 @@ public class DownloadFileUtil {
                 FileOutputStream fileOutputStream = new FileOutputStream(source)){;
             byte [] dataBuffer = new byte[1024];
             int bytesRead;
-            while((bytesRead=in.read(dataBuffer,0,2014)) != -1) {
+            while((bytesRead=in.read(dataBuffer,0,1024)) != -1) {
                 fileOutputStream.write(dataBuffer,0,bytesRead);
             }
         } catch (IOException e) {

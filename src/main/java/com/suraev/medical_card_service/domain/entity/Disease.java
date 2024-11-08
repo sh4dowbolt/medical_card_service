@@ -10,7 +10,7 @@ public class Disease {
     @Id
     @Column(name ="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     @Column(name = "numberOfDisease")
     private String numberOfDisease;
     @Column(name ="start_disease")
