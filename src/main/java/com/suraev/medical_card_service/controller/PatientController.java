@@ -12,6 +12,8 @@ import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URISyntaxException;
+
 @RestController
 @RequestMapping(value = "/patient")
 @RequiredArgsConstructor
@@ -20,20 +22,20 @@ public class PatientController {
     private final PatientService patientService;
 
     @GetMapping(value = "/{patient_id}")
-    public ResponseEntity<PatientDTO> getPatient(@PathVariable String patient_id) {
-
+    public ResponseEntity<PatientDTO> getPatient(@PathVariable Long patient_id) {
+        return patientService.getPatientById(patient_id);
     }
     @PutMapping
     public ResponseEntity<PatientDTO> updatePatient(@RequestBody PatientUpdateDTO patient) {
-
+        return patientService.updatePatient(patient);
     }
     @DeleteMapping
     public ResponseEntity<Void> deletePatient(@PathVariable String patient_id) {
-
+        return patientService.deletePatientById(patient_id);
     }
 
     @PostMapping
-    public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientCreateDTO patient) {
+    public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientCreateDTO patient) throws URISyntaxException {
         return patientService.createPatient(patient);
     }
 

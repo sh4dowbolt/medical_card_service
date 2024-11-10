@@ -5,18 +5,15 @@ import com.suraev.medical_card_service.util.CSVParser;
 import com.suraev.medical_card_service.util.DownloadFileUtil;
 import com.suraev.medical_card_service.util.eventListener.CustomEventPublisher;
 import com.suraev.medical_card_service.util.eventListener.UpdateEvent;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
