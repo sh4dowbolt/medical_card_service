@@ -6,6 +6,7 @@ import com.suraev.medical_card_service.dto.PatientDTO;
 import com.suraev.medical_card_service.dto.PatientUpdateDTO;
 import com.suraev.medical_card_service.repository.PatientRepository;
 import com.suraev.medical_card_service.service.PatientService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpRequest;
@@ -35,7 +36,7 @@ public class PatientController {
     }
 
     @PostMapping
-    public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientCreateDTO patient) throws URISyntaxException {
+    public ResponseEntity<PatientDTO> createPatient(@RequestBody @Valid PatientCreateDTO patient) throws URISyntaxException {
         return patientService.createPatient(patient);
     }
 

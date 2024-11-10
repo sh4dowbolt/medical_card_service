@@ -1,22 +1,27 @@
 package com.suraev.medical_card_service.dto;
 
 import com.suraev.medical_card_service.domain.entity.enums.Sex;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
 public class PatientCreateDTO {
-    @NotBlank
+    @NotBlank(message = "Имя не должно быть пустым")
     private String firstName;
     @NotBlank
     private String lastName;
     private String middleName;
-    @NotBlank
+    @Enumerated(EnumType.STRING)
     private Sex sex;
     @PastOrPresent
     private LocalDate birthday;
-    @Length(min = 16, max = 16)
-    private Long numberOfPolicy;
+    @Length(message = "Номер полиса должен состоять из 16 цифр", min = 16, max = 16)
+    private String numberOfPolicy;
 }

@@ -2,12 +2,16 @@ package com.suraev.medical_card_service.domain.entity;
 
 import com.suraev.medical_card_service.domain.entity.enums.Sex;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "Patients")
+@Getter
+@Setter
 public class Patient {
     @Id
     @Column(name = "id")
@@ -19,6 +23,7 @@ public class Patient {
     private String lastName;
     @Column(name ="middle_name")
     private String middleName;
+    @Enumerated(EnumType.STRING)
     @Column(name="sex")
     private Sex sex;
     @Column(name="birthday")
