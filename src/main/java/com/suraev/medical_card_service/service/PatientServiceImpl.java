@@ -4,15 +4,18 @@ import com.suraev.medical_card_service.domain.entity.Patient;
 import com.suraev.medical_card_service.dto.PatientCreateDTO;
 import com.suraev.medical_card_service.dto.PatientDTO;
 import com.suraev.medical_card_service.dto.PatientUpdateDTO;
+import com.suraev.medical_card_service.exception.BadRequestAlertException;
 import com.suraev.medical_card_service.repository.PatientRepository;
 import com.suraev.medical_card_service.util.HeaderUtil;
 import com.suraev.medical_card_service.util.ResponseUtil;
 import com.suraev.medical_card_service.util.mapper.PatientMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.zalando.problem.Status;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -33,14 +36,14 @@ public class PatientServiceImpl implements PatientService {
         var patientResponse = patientMapper.map(result);
 
         HttpHeaders headers = HeaderUtil.createEntityCreationAlert(applicationName, ENTITY_NAME, String.valueOf(patientResponse.getId()));
-        // TODO: протестить на что влияет "/api/patient"
-        return ResponseEntity.created(new URI("/api/patient"+patientResponse.getId())).headers(headers).body(patientResponse);
+
+        return ResponseEntity.created(new URI("/api/v1/patient/"+patientResponse.getId())).headers(headers).body(patientResponse);
     }
 
     @Override
     public ResponseEntity<PatientDTO> updatePatient(PatientUpdateDTO patientDTO) {
         if(patientDTO.getId() == null) {
-            throw new IllegalArgumentException("An existing patient should have an id");
+            throw new BadRequestAlertException("An existing patient should have an id", Status.BAD_REQUEST,ENTITY_NAME,"noid");
         }
         Patient existedPatient = patientRepository.findById(patientDTO.getId().get())
                 .orElseThrow(() -> new IllegalArgumentException("Such patient with this id doesn't exist"));

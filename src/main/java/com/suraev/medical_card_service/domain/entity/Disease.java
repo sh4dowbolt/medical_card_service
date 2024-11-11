@@ -1,11 +1,16 @@
 package com.suraev.medical_card_service.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
+
 @Entity
 @Table(name="diseases")
+@Getter
+@Setter
 public class Disease {
     @Id
     @Column(name ="id")
@@ -21,7 +26,7 @@ public class Disease {
     private String prescription;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="disease_id", referencedColumnName = "id")
+    @JoinColumn(name="patient_id", referencedColumnName = "id")
     private Patient patient;
 
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +27,8 @@ public class ParseCodeServiceImpl implements ParseCodeService {
     private final CustomEventPublisher applicationEventPublisher;
     private Logger log = LoggerFactory.getLogger(ParseCodeServiceImpl.class);
 
-    @Scheduled(cron = "@midnight")
+   // @Scheduled(cron = "@midnight")
+    @Scheduled(fixedRate = 30, timeUnit = TimeUnit.SECONDS)
     @Override
     public void prepareCodeDictionaryList() throws MalformedURLException {
         DownloadFileUtil.downloadFile(target,source);

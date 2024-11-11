@@ -24,6 +24,7 @@ import org.zalando.problem.violations.ConstraintViolationProblem;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,15 +39,25 @@ public class ExceptionTranslator implements ProblemHandling, AdviceTrait {
     @Value(value = "${spring.application.name}")
     private String applicationName;
 
+    // TODO: сделать более читаемо переменные
     @Override
     public ResponseEntity<Problem> handleMessageNotReadableException(HttpMessageNotReadableException ex, NativeWebRequest request) {
-        String detail = "JSON parse error: " + ex.getMessage(); Throwable mostSpecificCause = ex.getMostSpecificCause();
-        if (mostSpecificCause instanceof InvalidFormatException) {
-            InvalidFormatException ife = (InvalidFormatException) mostSpecificCause;
+        String detail = "JSON parse error: " + ex.getMessage();
+        Throwable mostSpecificCause = ex.getMostSpecificCause();
+        if (mostSpecificCause instanceof InvalidFormatException ife) {
             detail = String.format("Cannot deserialize value '%s' to %s. Accepted values are: %s",
                     ife.getValue(), ife.getTargetType().getSimpleName(),
-                    String.join(", ", Arrays.stream(Sex.values()).map(Enum::name).toArray(String[]::new))); }
-        Problem problem = Problem.builder() .withStatus(Status.BAD_REQUEST) .withTitle("Invalid Input") .withDetail(detail) .build();
+                    String.join(", ", Arrays.stream(Sex.values()).map(Enum::name).toArray(String[]::new)));
+        }
+        if (mostSpecificCause instanceof DateTimeParseException ife) {
+            detail = String.format("Cannot deserialize the data '%s'. Required format is 'dd-MM-yyyy'",
+                    ife.getParsedString());
+        }
+        Problem problem = Problem.builder()
+                .withStatus(Status.BAD_REQUEST)
+                .withTitle("Invalid Input")
+                .withDetail(detail)
+                .build();
         return create(ex, problem,request);
     }
 
@@ -102,10 +113,9 @@ public class ExceptionTranslator implements ProblemHandling, AdviceTrait {
         return create(ex, request, HeaderUtil.createFailureAlert(applicationName, false, ex.getEntityName(), ex.getErrorKey(), ex.getMessage()));
     }
 
-   /* @ExceptionHandler
+    @ExceptionHandler
     public ResponseEntity<Problem> handleNoResourceFoundException(NoResourceFoundException ex, NativeWebRequest request) {
-        return create(Status.BAD_REQUEST,ex, request, HeaderUtil.createFailureAlert( false, ex.getMessage()));
+        return create(Status.BAD_REQUEST,ex, request, HeaderUtil.createFailureAlert(applicationName,ex.getMessage()));
     }
-*/
 
 }

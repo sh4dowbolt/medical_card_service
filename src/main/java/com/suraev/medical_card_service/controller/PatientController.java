@@ -27,10 +27,10 @@ public class PatientController {
         return patientService.getPatientById(patient_id);
     }
     @PutMapping
-    public ResponseEntity<PatientDTO> updatePatient(@RequestBody PatientUpdateDTO patient) {
+    public ResponseEntity<PatientDTO> updatePatient(@RequestBody @Valid PatientUpdateDTO patient) {
         return patientService.updatePatient(patient);
     }
-    @DeleteMapping
+    @DeleteMapping(value ="/{patient_id}")
     public ResponseEntity<Void> deletePatient(@PathVariable String patient_id) {
         return patientService.deletePatientById(patient_id);
     }

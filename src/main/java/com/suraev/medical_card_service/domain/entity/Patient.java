@@ -2,10 +2,13 @@ package com.suraev.medical_card_service.domain.entity;
 
 import com.suraev.medical_card_service.domain.entity.enums.Sex;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,6 +35,15 @@ public class Patient {
     private Long numberOfPolicy;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Disease> diseaseList;
+
+    public void addDisease(Disease disease) {
+        if(diseaseList==null) {
+            diseaseList = new ArrayList<>();
+        }
+        diseaseList.add(disease);
+    }
 
 }

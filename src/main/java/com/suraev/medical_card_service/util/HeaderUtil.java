@@ -37,4 +37,12 @@ public class HeaderUtil {
         headers.add("X-"+applicationName+"-params", entityName);
         return headers;
     }
+    public static HttpHeaders createFailureAlert(String applicationName, String defaultMessage) {
+        log.error("Entity processing failed, {}", defaultMessage);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-"+applicationName+"-error", defaultMessage);
+
+        return headers;
+    }
 }
