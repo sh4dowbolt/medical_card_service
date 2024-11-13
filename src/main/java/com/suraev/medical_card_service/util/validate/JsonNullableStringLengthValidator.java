@@ -3,7 +3,6 @@ package com.suraev.medical_card_service.util.validate;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 
 public class JsonNullableStringLengthValidator implements ConstraintValidator<LengthNullableStringProperty, String> {

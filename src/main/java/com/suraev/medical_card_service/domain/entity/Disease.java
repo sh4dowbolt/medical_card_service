@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 
 @Entity
@@ -30,16 +29,16 @@ public class Disease {
     @JoinColumn(name="patient_id", referencedColumnName = "id")
     private Patient patient;
 
-    @Override
+   /* @Override
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Disease disease = (Disease) object;
         return Objects.equals(id, disease.id);
     }
-
-    @Override
+*/
+    /*@Override
     public int hashCode() {
         return Objects.hashCode(id);
-    }
+    }*/
 }

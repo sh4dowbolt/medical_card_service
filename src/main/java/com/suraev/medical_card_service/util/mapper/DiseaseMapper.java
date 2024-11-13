@@ -1,8 +1,9 @@
 package com.suraev.medical_card_service.util.mapper;
 
 import com.suraev.medical_card_service.domain.entity.Disease;
-import com.suraev.medical_card_service.domain.entity.Patient;
-import com.suraev.medical_card_service.dto.*;
+import com.suraev.medical_card_service.dto.DiseaseCreateDTO;
+import com.suraev.medical_card_service.dto.DiseaseDTO;
+import com.suraev.medical_card_service.dto.DiseaseUpdateDTO;
 import org.mapstruct.*;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,

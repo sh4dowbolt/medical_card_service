@@ -2,6 +2,7 @@ package com.suraev.medical_card_service.controller;
 
 
 import com.suraev.medical_card_service.domain.entity.CodeDisease;
+import com.suraev.medical_card_service.service.CodeDiseaseService;
 import com.suraev.medical_card_service.service.CodeDiseaseServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +14,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CodeDiseaseController {
 
-    private final CodeDiseaseServiceImpl codeDiseaseService;
+    private final CodeDiseaseService codeDiseaseService;
 
-    @GetMapping(value= "/dictionary/mkb10",produces = "application/json")
+    @GetMapping(value= "/dictionary/mkb10", produces = "application/json")
     public List<CodeDisease> getCodeDiseaseList() {
         return codeDiseaseService.getAllCodeDiseases();
     }

@@ -1,6 +1,5 @@
 package com.suraev.medical_card_service.util.eventListener;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Component;
@@ -12,9 +11,7 @@ public class CustomEventPublisher implements ApplicationEventPublisherAware {
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher=applicationEventPublisher;
     }
-
     public void publishEvent(Object o) {
         applicationEventPublisher.publishEvent(o);
     }
-
 }

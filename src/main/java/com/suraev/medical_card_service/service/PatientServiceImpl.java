@@ -10,11 +10,11 @@ import com.suraev.medical_card_service.util.HeaderUtil;
 import com.suraev.medical_card_service.util.ResponseUtil;
 import com.suraev.medical_card_service.util.mapper.PatientMapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zalando.problem.Status;
 
 import java.net.URI;
@@ -30,6 +30,7 @@ public class PatientServiceImpl implements PatientService {
     private final PatientMapper patientMapper;
 
     @Override
+    @Transactional
     public ResponseEntity<PatientDTO> createPatient(PatientCreateDTO patientDTO) throws URISyntaxException {
         var patient = patientMapper.map(patientDTO);
         var result = patientRepository.save(patient);
@@ -41,6 +42,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<PatientDTO> updatePatient(PatientUpdateDTO patientDTO) {
         if(patientDTO.getId() == null) {
             throw new BadRequestAlertException("An existing patient should have an id", Status.BAD_REQUEST,ENTITY_NAME,"no_id");
@@ -56,14 +58,17 @@ public class PatientServiceImpl implements PatientService {
         return ResponseEntity.ok().headers(headers).body(patientResponse);
     }
     @Override
+    @Transactional(readOnly = true)
     public ResponseEntity<PatientDTO> getPatientById(Long id) {
         var result = patientRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(result, patientMapper);
     }
 
     @Override
-    public ResponseEntity<Void> deletePatientById(String id) {
-        HttpHeaders headers = HeaderUtil.createEntityDeletionAlert(applicationName, ENTITY_NAME, id);
+    @Transactional
+    public ResponseEntity<Void> deletePatientById(Long id) {
+        patientRepository.deleteById(id);
+        HttpHeaders headers = HeaderUtil.createEntityDeletionAlert(applicationName, ENTITY_NAME, String.valueOf(id));
         return ResponseEntity.noContent().headers(headers).build();
     }
 }

@@ -8,11 +8,7 @@ import org.springframework.context.ApplicationEvent;
 @Getter
 @Setter
 public class UpdateEvent extends ApplicationEvent {
-
     public UpdateEvent(Object source) {
         super(source);
     }
-
-
-
 }

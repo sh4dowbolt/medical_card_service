@@ -1,10 +1,8 @@
 package com.suraev.medical_card_service.controller;
 
-import com.suraev.medical_card_service.domain.entity.Disease;
 import com.suraev.medical_card_service.dto.DiseaseCreateDTO;
 import com.suraev.medical_card_service.dto.DiseaseDTO;
 import com.suraev.medical_card_service.dto.DiseaseUpdateDTO;
-import com.suraev.medical_card_service.service.CodeDiseaseService;
 import com.suraev.medical_card_service.service.DiseaseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,24 +18,25 @@ import java.util.List;
 public class DiseaseController {
     private final DiseaseService diseaseService;
 
-    @GetMapping
-    public List<DiseaseDTO> getAllDiseases(@PathVariable Long patient_id) {
-        return diseaseService.getAllDiseases(patient_id);
+    @GetMapping(produces = "application/json")
+    public List<DiseaseDTO> getAllDiseases(@PathVariable("patient_id") Long patientId) {
+        return diseaseService.getAllDiseases(patientId);
     }
-    @GetMapping(value = "/{disease_id}")
-    public ResponseEntity<DiseaseDTO>getDiseaseById(@PathVariable Long patient_id, @PathVariable Long disease_id) {
-        return diseaseService.getDiseaseByID(patient_id,disease_id);
+    @GetMapping(value = "/{disease_id}", produces = "application/json")
+    public ResponseEntity<DiseaseDTO>getDiseaseById(@PathVariable("patient_id") Long patientId, @PathVariable("disease_id") Long diseaseId) {
+        return diseaseService.getDiseaseByID(patientId,diseaseId);
     }
-    @PostMapping
-    public ResponseEntity<DiseaseDTO> createDisease(@PathVariable Long patient_id, @RequestBody DiseaseCreateDTO disease) throws URISyntaxException {
-        return diseaseService.createDisease(patient_id, disease);
+    @PostMapping(produces = "application/json")
+    //TODO: опять же, что делать URISyntaxException в сигнатуре метода
+    public ResponseEntity<DiseaseDTO> createDisease(@PathVariable("patient_id") Long patientId, @Valid @RequestBody DiseaseCreateDTO diseaseDTO) throws URISyntaxException {
+        return diseaseService.createDisease(patientId, diseaseDTO);
     }
     @PutMapping(produces = "application/json")
-    public ResponseEntity<DiseaseDTO> updateDisease(@PathVariable("patient_id") Long patient_id, @Valid @RequestBody DiseaseUpdateDTO disease) {
-        return diseaseService.updateDisease(patient_id, disease);
+    public ResponseEntity<DiseaseDTO> updateDisease(@PathVariable("patient_id") Long patientId, @Valid @RequestBody DiseaseUpdateDTO diseaseDTO) {
+        return diseaseService.updateDisease(patientId, diseaseDTO);
     }
     @DeleteMapping(value = "/{disease_id}")
-    public ResponseEntity<Void> deleteDisease(@PathVariable("patient_id") Long patient_id, @PathVariable("disease_id") Long disease_id) {
-        return diseaseService.deleteDisease(patient_id,disease_id);
+    public ResponseEntity<Void> deleteDisease(@PathVariable("patient_id") Long patientId, @PathVariable("disease_id") Long diseaseId) {
+        return diseaseService.deleteDisease(patientId,diseaseId);
     }
 }

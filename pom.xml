@@ -37,6 +37,9 @@
 		<zalando.problem.web>0.29.1</zalando.problem.web>
 		<zalando.problem.jackson>0.27.1</zalando.problem.jackson>
 		<h2.database>2.2.224</h2.database>
+		<flyWay.version>10.17.1</flyWay.version>
+		<openApi.version>1.7.0</openApi.version>
+		<springdoc-openapi>2.2.0</springdoc-openapi>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -93,8 +96,27 @@
 			<version>${h2.database}</version>
 			<scope>test</scope>
 		</dependency>
-
-
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>${flyWay.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-database-postgresql</artifactId>
+			<version>${flyWay.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${springdoc-openapi}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${openApi.version}</version>
+		</dependency>
 	</dependencies>
 
 

@@ -2,10 +2,8 @@ package com.suraev.medical_card_service.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.suraev.medical_card_service.domain.entity.enums.Sex;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
 

@@ -6,7 +6,6 @@ import com.suraev.medical_card_service.util.validate.LengthNullableStringPropert
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.LocalDate;

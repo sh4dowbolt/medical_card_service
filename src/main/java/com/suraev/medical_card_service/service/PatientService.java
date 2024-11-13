@@ -11,5 +11,5 @@ public interface PatientService {
     ResponseEntity<PatientDTO> createPatient(PatientCreateDTO patientDTO) throws URISyntaxException;
     ResponseEntity<PatientDTO> updatePatient(PatientUpdateDTO patientDTO);
     ResponseEntity<PatientDTO> getPatientById(Long id);
-    ResponseEntity<Void> deletePatientById(String id);
+    ResponseEntity<Void> deletePatientById(Long id);
 }

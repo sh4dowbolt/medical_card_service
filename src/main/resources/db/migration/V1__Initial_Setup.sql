@@ -23,13 +23,3 @@ CREATE TABLE IF NOT EXISTS diseases (
     primary key (id),
     foreign key (patient_id) references patients(id)
 );
-
-
-INSERT INTO patients(first_name,last_name, middle_name, sex, birthday, number_policy)
-VALUES ('Vitaly', 'Suraev','Viktorovich','M','2022-10-31','1234567812314568');
-
-INSERT INTO code_diseases(id,title_disease)
-VALUES ('A01.0', 'Брюшной тиф');
-
-INSERT INTO diseases(patient_id)
-VALUES('1')

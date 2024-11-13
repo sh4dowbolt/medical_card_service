@@ -14,6 +14,9 @@ public class CSVParser {
             String line;
             while((line = br.readLine()) != null) {
                 CodeDisease codeDisease = parseLineToCode(line);
+                if(codeDisease.getId().isEmpty() || codeDisease.getTitleDisease().isEmpty()) {
+                    continue;
+                }
                 diseaseList.add(codeDisease);
             }
         } catch (IOException e) {

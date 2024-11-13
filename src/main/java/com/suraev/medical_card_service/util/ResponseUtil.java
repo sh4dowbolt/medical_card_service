@@ -3,7 +3,6 @@ package com.suraev.medical_card_service.util;
 import com.suraev.medical_card_service.domain.entity.Patient;
 import com.suraev.medical_card_service.dto.DiseaseDTO;
 import com.suraev.medical_card_service.dto.PatientDTO;
-import com.suraev.medical_card_service.util.mapper.DiseaseMapper;
 import com.suraev.medical_card_service.util.mapper.PatientMapper;
 import org.springframework.http.ResponseEntity;
 

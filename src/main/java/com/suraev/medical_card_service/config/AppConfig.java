@@ -1,9 +1,9 @@
 package com.suraev.medical_card_service.config;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.openapitools.jackson.nullable.JsonNullableModule;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -13,7 +13,14 @@ import org.zalando.problem.jackson.ProblemModule;
 @Configuration
 @EnableScheduling
 @EnableAsync
-public class ApplicationConfiguration {
+public class AppConfig {
+    @Value("${cron.update.dictionary}")
+    private String cronForUpdate;
+
+    @Bean
+    public String cronForUpdate() {
+        return cronForUpdate;
+    }
     @Bean
     ObjectMapper getObjectmapper() {
         ObjectMapper mapper = new ObjectMapper();
@@ -22,5 +29,7 @@ public class ApplicationConfiguration {
                 .registerModule(new JsonNullableModule());
         return mapper;
     }
+
+
 
 }

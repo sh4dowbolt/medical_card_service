@@ -9,9 +9,9 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 public interface DiseaseService {
-    List<DiseaseDTO> getAllDiseases(Long patient_id);
-    ResponseEntity<DiseaseDTO> getDiseaseByID(Long patient_id, Long disease_id);
-    ResponseEntity<DiseaseDTO> createDisease(Long patient_id, DiseaseCreateDTO disease) throws URISyntaxException;
-    ResponseEntity<DiseaseDTO> updateDisease(Long patient_id, DiseaseUpdateDTO disease);
-    ResponseEntity<Void> deleteDisease(Long patient_id, Long disease_id);
+    List<DiseaseDTO> getAllDiseases(Long patientId);
+    ResponseEntity<DiseaseDTO> getDiseaseByID(Long patientId, Long diseaseId);
+    ResponseEntity<DiseaseDTO> createDisease(Long patientId, DiseaseCreateDTO diseaseDTO) throws URISyntaxException;
+    ResponseEntity<DiseaseDTO> updateDisease(Long patientId, DiseaseUpdateDTO diseaseDTO);
+    ResponseEntity<Void> deleteDisease(Long patientId, Long diseaseId);
  }
