@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ParseCodeService {
      void prepareCodeDictionaryList() throws MalformedURLException;
+     void scheduledTask();
 }

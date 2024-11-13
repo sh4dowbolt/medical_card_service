@@ -43,10 +43,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public ResponseEntity<PatientDTO> updatePatient(PatientUpdateDTO patientDTO) {
         if(patientDTO.getId() == null) {
-            throw new BadRequestAlertException("An existing patient should have an id", Status.BAD_REQUEST,ENTITY_NAME,"noid");
+            throw new BadRequestAlertException("An existing patient should have an id", Status.BAD_REQUEST,ENTITY_NAME,"no_id");
         }
         Patient existedPatient = patientRepository.findById(patientDTO.getId().get())
-                .orElseThrow(() -> new IllegalArgumentException("Such patient with this id doesn't exist"));
+                .orElseThrow(() -> new BadRequestAlertException("Such patient with this id doesn't exist",Status.BAD_REQUEST,ENTITY_NAME,"no_exist_patient)"));
 
         patientMapper.update(patientDTO,existedPatient);
         var result = patientRepository.save(existedPatient);

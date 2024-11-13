@@ -8,6 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CodeDiseaseRepository extends JpaRepository<CodeDisease, Long> {
-    Optional<CodeDisease> findById(String aLong);
+public interface CodeDiseaseRepository extends JpaRepository<CodeDisease, String> {
 }

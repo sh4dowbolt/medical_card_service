@@ -30,14 +30,14 @@ public class DiseaseController {
     }
     @PostMapping
     public ResponseEntity<DiseaseDTO> createDisease(@PathVariable Long patient_id, @RequestBody DiseaseCreateDTO disease) throws URISyntaxException {
-    return diseaseService.createDisease(patient_id, disease);
+        return diseaseService.createDisease(patient_id, disease);
     }
     @PutMapping(produces = "application/json")
     public ResponseEntity<DiseaseDTO> updateDisease(@PathVariable("patient_id") Long patient_id, @Valid @RequestBody DiseaseUpdateDTO disease) {
-    return diseaseService.updateDisease(patient_id, disease);
+        return diseaseService.updateDisease(patient_id, disease);
     }
-    /*@DeleteMapping
-    public ResponseEntity<Void> deleteDisease(@PathVariable String patient_id, @PathVariable String disease_id) {
-
-    }*/
+    @DeleteMapping(value = "/{disease_id}")
+    public ResponseEntity<Void> deleteDisease(@PathVariable("patient_id") Long patient_id, @PathVariable("disease_id") Long disease_id) {
+        return diseaseService.deleteDisease(patient_id,disease_id);
+    }
 }

@@ -12,7 +12,7 @@ public class JsonNullableStringLengthValidator implements ConstraintValidator<Le
     @Override
     public void initialize(LengthNullableStringProperty constraintAnnotation) {
         this.min = constraintAnnotation.min();
-        this.max = constraintAnnotation.min();
+        this.max = constraintAnnotation.max();
     }
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {

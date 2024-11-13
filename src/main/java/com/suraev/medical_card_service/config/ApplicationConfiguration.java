@@ -6,9 +6,13 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.openapitools.jackson.nullable.JsonNullableModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.zalando.problem.jackson.ProblemModule;
 
 @Configuration
+@EnableScheduling
+@EnableAsync
 public class ApplicationConfiguration {
     @Bean
     ObjectMapper getObjectmapper() {

@@ -13,7 +13,7 @@ public interface DiseaseMapper{
 
     Disease mapToEntity(DiseaseCreateDTO dto);
     DiseaseDTO mapToDTO(Disease disease);
-    Disease update(DiseaseUpdateDTO dto, @MappingTarget Disease disease);
+    void update(DiseaseUpdateDTO dto, @MappingTarget Disease disease);
 
 
 }

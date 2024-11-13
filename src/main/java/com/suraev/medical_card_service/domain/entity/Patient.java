@@ -10,11 +10,13 @@ import lombok.ToString;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Patients")
 @Getter
 @Setter
+
 public class Patient {
     @Id
     @Column(name = "id")
@@ -34,7 +36,7 @@ public class Patient {
     @Column(name="number_policy")
     private Long numberOfPolicy;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Disease> diseaseList;
@@ -45,5 +47,4 @@ public class Patient {
         }
         diseaseList.add(disease);
     }
-
 }

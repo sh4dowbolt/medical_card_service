@@ -36,6 +36,7 @@
 		<jacksonDatabing>0.2.6</jacksonDatabing>
 		<zalando.problem.web>0.29.1</zalando.problem.web>
 		<zalando.problem.jackson>0.27.1</zalando.problem.jackson>
+		<h2.database>2.2.224</h2.database>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -86,6 +87,13 @@
 			<artifactId>jackson-datatype-problem</artifactId>
 			<version>${zalando.problem.jackson}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${h2.database}</version>
+			<scope>test</scope>
+		</dependency>
+
 
 	</dependencies>
 

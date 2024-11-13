@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -21,10 +23,11 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class UpdateCodeServiceImpl {
+public class UpdateCodeServiceImpl implements UpdateCodeService {
 
     private final CodeDiseaseRepository codeDiseaseRepository;
     private Logger log = LoggerFactory.getLogger(UpdateCodeServiceImpl.class);
+
 
     @EventListener
     @CacheEvict(value = "codeDiseases",allEntries = true)
@@ -37,7 +40,7 @@ public class UpdateCodeServiceImpl {
        }
     }
 
-    public static boolean isListOfCodeDisease(Object object) {
+   private boolean isListOfCodeDisease(Object object) {
         if(object instanceof List<?> list) {
             return !list.isEmpty() && list.get(0) instanceof CodeDisease;
         }

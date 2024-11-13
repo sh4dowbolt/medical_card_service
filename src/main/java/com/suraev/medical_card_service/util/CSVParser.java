@@ -1,11 +1,12 @@
 package com.suraev.medical_card_service.util;
 
 import com.suraev.medical_card_service.domain.entity.CodeDisease;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Component
 public class CSVParser {
     public static List<CodeDisease> parse(String pathFile) {
         List<CodeDisease> diseaseList = new ArrayList<>();
