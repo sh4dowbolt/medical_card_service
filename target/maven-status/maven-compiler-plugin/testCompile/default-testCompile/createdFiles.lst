@@ -1,0 +1,14 @@
+com\suraev\medical_card_service\controller\DiseaseControllerIT$getByIdMethod.class
+com\suraev\medical_card_service\controller\PatientControllerIT$postMethod.class
+com\suraev\medical_card_service\controller\DiseaseControllerIT$getAllMethod.class
+com\suraev\medical_card_service\MedicalCardServiceApplicationTests.class
+com\suraev\medical_card_service\controller\CodeDiseaseControllerIT.class
+com\suraev\medical_card_service\config\TestConfig.class
+com\suraev\medical_card_service\controller\DiseaseControllerIT.class
+com\suraev\medical_card_service\controller\PatientControllerIT.class
+com\suraev\medical_card_service\controller\DiseaseControllerIT$postMethod.class
+com\suraev\medical_card_service\controller\DiseaseControllerIT$updateMethod.class
+com\suraev\medical_card_service\controller\DiseaseControllerIT$deleteByIdMethod.class
+com\suraev\medical_card_service\controller\PatientControllerIT$getMethod.class
+com\suraev\medical_card_service\controller\PatientControllerIT$updateMethod.class
+com\suraev\medical_card_service\controller\PatientControllerIT$deleteMethod.class
