@@ -11,7 +11,7 @@ import java.util.List;
 public interface DiseaseService {
     List<DiseaseDTO> getAllDiseases(Long patientId);
     ResponseEntity<DiseaseDTO> getDiseaseByID(Long patientId, Long diseaseId);
-    ResponseEntity<DiseaseDTO> createDisease(Long patientId, DiseaseCreateDTO diseaseDTO) throws URISyntaxException;
+    ResponseEntity<DiseaseDTO> createDisease(Long patientId, DiseaseCreateDTO diseaseDTO);
     ResponseEntity<DiseaseDTO> updateDisease(Long patientId, DiseaseUpdateDTO diseaseDTO);
     ResponseEntity<Void> deleteDisease(Long patientId, Long diseaseId);
  }

@@ -29,13 +29,13 @@ public class PatientCreateDTO {
     private String middleName;
 
     @Enumerated(EnumType.STRING)
-    @Schema(description = "Пол пациента",example = "М")
+    @Schema(description = "Пол пациента",example = "M", type = "string")
     private Sex sex;
 
     @NotNull(message = "Birth date must be not empty")
     @PastOrPresent(message = "Birth date must be in the past or current")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    @Schema(description = "Дата рождения",example = "21-10-2003")
+    @Schema(description = "Дата рождения",example = "21-10-2003", type = "string")
     private LocalDate birthday;
 
     @NotNull(message = "Number of policy must be not empty")

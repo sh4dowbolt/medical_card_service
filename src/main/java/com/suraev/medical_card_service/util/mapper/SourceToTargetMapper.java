@@ -9,8 +9,8 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface SourceToTargetMapper  {
     PatientDTO toTargetEntity(Patient source);
-    Patient toSourceEntity(PatientDTO target);
+    Patient toSourceEntity(PatientDTO target, PatientMapper mapper);
     DiseaseDTO toTargetEntity(Disease source);
-    Disease toSourceEntity(DiseaseDTO target);
+    Disease toSourceEntity(DiseaseDTO target,DiseaseMapper mapper);
 
 }

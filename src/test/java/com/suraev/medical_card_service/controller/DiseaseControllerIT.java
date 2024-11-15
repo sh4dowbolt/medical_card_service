@@ -60,15 +60,14 @@ class DiseaseControllerIT {
                     .content(disease)).andExpect(status().isBadRequest());
         }
         @Test
-        void createWithBadRequestExistedPatient() throws Exception {
-            String patientId = "1";
-            String disease = "{\"id\":\"+"+patientId+"+\"," +
-                    "\"numberOfDisease\":\"A01.0\","+
+        void createWithBadRequestNotExistedPatient() throws Exception {
+            String patientId = "2";
+            String disease = "{\"numberOfDisease\":\"A01.0\","+
                     "\"startDisease\":\"21-10-1996\"," +
                     "\"endDisease\":\"22-10-1996\"," +
                     "\"prescription\":\"take a medicine\" }";
 
-            mockMvc.perform(MockMvcRequestBuilders.post("/patient/1/disease")
+            mockMvc.perform(MockMvcRequestBuilders.post("/patient/"+patientId+"/disease")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(disease)).andExpect(status().isBadRequest());
         }

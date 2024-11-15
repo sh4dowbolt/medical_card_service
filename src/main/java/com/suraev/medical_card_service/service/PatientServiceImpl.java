@@ -31,28 +31,30 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     @Transactional
-    public ResponseEntity<PatientDTO> createPatient(PatientCreateDTO patientDTO) throws URISyntaxException {
-        var patient = patientMapper.map(patientDTO);
-        var result = patientRepository.save(patient);
-        var patientResponse = patientMapper.map(result);
+    public ResponseEntity<PatientDTO> createPatient(PatientCreateDTO patientDTO) {
+        final var patient = patientMapper.map(patientDTO);
+        final var result = patientRepository.save(patient);
+        final var patientResponse = patientMapper.map(result);
 
         HttpHeaders headers = HeaderUtil.createEntityCreationAlert(applicationName, ENTITY_NAME, String.valueOf(patientResponse.getId()));
 
-        return ResponseEntity.created(new URI("/api/v1/patient/"+patientResponse.getId())).headers(headers).body(patientResponse);
+        try {
+            return ResponseEntity.created(new URI("/api/v1/patient/"+patientResponse.getId())).headers(headers).body(patientResponse);
+        } catch (URISyntaxException e) {
+            throw new BadRequestAlertException("URL cant be parsed",Status.BAD_REQUEST, ENTITY_NAME,"wrong_url");
+        }
     }
 
     @Override
     @Transactional
     public ResponseEntity<PatientDTO> updatePatient(PatientUpdateDTO patientDTO) {
-        if(patientDTO.getId() == null) {
-            throw new BadRequestAlertException("An existing patient should have an id", Status.BAD_REQUEST,ENTITY_NAME,"no_id");
-        }
-        Patient existedPatient = patientRepository.findById(patientDTO.getId().get())
+
+        final var existedPatient = patientRepository.findById(patientDTO.getId())
                 .orElseThrow(() -> new BadRequestAlertException("Such patient with this id doesn't exist",Status.BAD_REQUEST,ENTITY_NAME,"no_exist_patient)"));
 
         patientMapper.update(patientDTO,existedPatient);
-        var result = patientRepository.save(existedPatient);
-        var patientResponse = patientMapper.map(result);
+        final var result = patientRepository.save(existedPatient);
+        final var patientResponse = patientMapper.map(result);
         HttpHeaders headers = HeaderUtil.createEntityUpdateAlert(applicationName, ENTITY_NAME, String.valueOf(patientResponse.getId()));
 
         return ResponseEntity.ok().headers(headers).body(patientResponse);
@@ -60,7 +62,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     @Transactional(readOnly = true)
     public ResponseEntity<PatientDTO> getPatientById(Long id) {
-        var result = patientRepository.findById(id);
+        final var result = patientRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(result, patientMapper);
     }
 

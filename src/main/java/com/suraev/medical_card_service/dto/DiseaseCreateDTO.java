@@ -17,14 +17,14 @@ public class DiseaseCreateDTO {
     @Schema(description = "Код заболевания",example = "A01.0")
     private String numberOfDisease;
 
+    @Schema(description = "Дата начала заболевания",example = "01-01-2024", type = "string")
     @PastOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    @Schema(description = "Дата начала заболевания",example = "01-01-2024")
     private LocalDate startDisease;
 
     @PastOrPresent
+    @Schema(description = "Дата окончания заболевания",example = "01-01-2024", type = "string")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    @Schema(description = "Дата окончания заболевания",example = "01-01-2024")
     private LocalDate endDisease;
 
     @NotNull

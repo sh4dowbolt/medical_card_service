@@ -18,7 +18,9 @@ import java.util.List;
 @Setter
 @Schema(description = "Сущность пациента")
 
+
 public class Patient {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

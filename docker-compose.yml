@@ -1,0 +1,43 @@
+version: "3.9"
+
+name: medical_card_service
+services:
+  medical_card_service:
+    build: .
+    container_name: medical_card_service
+    ports:
+      - target: 8080
+        published: 8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+    links:
+      - postgres
+    networks:
+      - node-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "psql -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - dbdata1:/data/postgres
+    networks:
+      - node-network
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+volumes:
+  dbdata1:
+
+networks:
+  node-network:
+    driver: bridge

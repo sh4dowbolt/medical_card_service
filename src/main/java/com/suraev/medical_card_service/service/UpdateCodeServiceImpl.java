@@ -23,11 +23,11 @@ public class UpdateCodeServiceImpl implements UpdateCodeService {
 
 
     @EventListener
-    @CacheEvict(value = "codeDiseases",allEntries = true)
     public void handle(UpdateEvent event) {
         log.info("Catch the updateEvent");
        if(!isListOfCodeDisease(event)) {
            var listOfCodeDiseases = (List<CodeDisease>)event.getSource();
+           clearCodeDiseaseCache();
            codeDiseaseRepository.saveAll(listOfCodeDiseases);
            log.info("All the codeDiseases has saved in the DB");
        }
@@ -39,4 +39,9 @@ public class UpdateCodeServiceImpl implements UpdateCodeService {
         }
         return false;
     }
+    @CacheEvict(value = "codeDiseases",allEntries = true)
+   private void clearCodeDiseaseCache()
+    {
+        log.info("Cleaning the cache");
+   }
 }

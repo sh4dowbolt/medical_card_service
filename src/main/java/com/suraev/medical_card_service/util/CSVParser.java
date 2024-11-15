@@ -1,19 +1,40 @@
 package com.suraev.medical_card_service.util;
 
 import com.suraev.medical_card_service.domain.entity.CodeDisease;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 @Component
 public class CSVParser {
-    public static List<CodeDisease> parse(String pathFile) {
+
+    public static List<CodeDisease> parse(String target) {
+        URL url = null;
+        try {
+            url = new URL(target);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
         List<CodeDisease> diseaseList = new ArrayList<>();
-        try(BufferedReader br =new BufferedReader(new FileReader(pathFile))) {
+
+        URLConnection connection= null;
+        try {
+            connection = url.openConnection();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try(InputStreamReader inputStreamReader= new InputStreamReader(connection.getInputStream());
+            BufferedReader br =new BufferedReader(inputStreamReader)) {
             String line;
             while((line = br.readLine()) != null) {
-                CodeDisease codeDisease = parseLineToCode(line);
+                CodeDisease codeDisease = parseLine(line);
                 if(codeDisease.getId().isEmpty() || codeDisease.getTitleDisease().isEmpty()) {
                     continue;
                 }
@@ -25,7 +46,7 @@ public class CSVParser {
         return diseaseList;
     }
 
-    public static CodeDisease parseLineToCode(String line) {
+    public static CodeDisease parseLine(String line) {
         List<String> result = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         boolean insideQuotes = false;

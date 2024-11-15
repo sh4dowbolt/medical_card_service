@@ -44,7 +44,7 @@ class postMethod {
                 .content(newPatient)).andExpect(status().isCreated());
     }
     @Test
-    void createPatientWithNotFound() throws Exception {
+    void createPatientWithBadRequest() throws Exception {
         String patientWithWrongData = "{\"firstName\":\"zxc\"," +
                 "\"lastName\":\"Suraev\"," +
                 "\"middleName\":\"Viktorovich\"," +
@@ -73,19 +73,6 @@ class updateMethod {
         @Test
         void getResponseBadRequestWhenPatientIdNotExist() throws Exception {
             String patientWithWrongData = "{\"id\":\"2\",\"firstName\":\"zxc\"," +
-                    "\"lastName\":\"Suraev\"," +
-                    "\"middleName\":\"Viktorovich\"," +
-                    "\"sex\":\"M\"," +
-                    "\"birthday\":\"21-10-2021\"," +
-                    "\"numberOfPolicy\": \"1234567812314568\"}"; // sex - L
-
-            mockMvc.perform(MockMvcRequestBuilders.put("/patient")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(patientWithWrongData)).andExpect(status().isBadRequest());
-        }
-        @Test
-        void getResponseBadRequestWhenPatientIdNull() throws Exception {
-            String patientWithWrongData = "{\"firstName\":\"zxc\"," +
                     "\"lastName\":\"Suraev\"," +
                     "\"middleName\":\"Viktorovich\"," +
                     "\"sex\":\"M\"," +

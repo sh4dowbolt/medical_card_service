@@ -47,11 +47,11 @@ public class DiseaseServiceImpl implements DiseaseService{
         final var patient = getPatientFromDbIfExisted(patientId);
         final var result = patient.getDiseaseList().stream().map(diseaseMapper::mapToDTO)
                 .filter(diseaseDTO -> Objects.equals(diseaseDTO.getId(), diseaseId)).findFirst();
-        return ResponseUtil.wrapOrNotFound(result);
+        return ResponseUtil.wrapOrNotFound(result, diseaseMapper);
     }
     @Override
     @Transactional
-    public ResponseEntity<DiseaseDTO> createDisease(Long patientId, DiseaseCreateDTO diseaseDTO) throws URISyntaxException {
+    public ResponseEntity<DiseaseDTO> createDisease(Long patientId, DiseaseCreateDTO diseaseDTO){
         final var patient = getPatientFromDbIfExisted(patientId);
         final var existedCodeDisease = getCodeDiseaseFromDBIfExisted(diseaseDTO.getNumberOfDisease());
 
@@ -66,7 +66,11 @@ public class DiseaseServiceImpl implements DiseaseService{
 
         HttpHeaders headers = HeaderUtil.createEntityCreationAlert(applicationName, ENTITY_NAME, String.valueOf(diseaseDTOForResponse.getId()));
 
-        return ResponseEntity.created(new URI("api/v1/patient/"+diseaseDTOForResponse.getId()+"/disease")).headers(headers).body(diseaseDTOForResponse);
+        try {
+            return ResponseEntity.created(new URI("api/v1/patient/"+diseaseDTOForResponse.getId()+"/disease")).headers(headers).body(diseaseDTOForResponse);
+        } catch (URISyntaxException e) {
+            throw new BadRequestAlertException("URL cant be parsed",Status.BAD_REQUEST, ENTITY_NAME,"wrong_url");
+        }
     }
 
     @Override
@@ -89,7 +93,6 @@ public class DiseaseServiceImpl implements DiseaseService{
         HttpHeaders headers = HeaderUtil.createEntityUpdateAlert(applicationName, ENTITY_NAME, String.valueOf(diseaseDTO.getId()));
 
         return ResponseEntity.ok().headers(headers).body(diseaseDTOForResponse);
-
     }
     @Override
     @Transactional
@@ -102,10 +105,9 @@ public class DiseaseServiceImpl implements DiseaseService{
 
         return ResponseEntity.noContent().headers(headers).build();
     }
-    //TODO: надо ли приватные методы сервиса делать транкзационными, они же делают запрос к бд ?
     private Patient getPatientFromDbIfExisted(Long patient_id) {
         return patientRepository.findById(patient_id).orElseThrow(
-                () -> new BadRequestAlertException("An existing patient must have an id", Status.BAD_REQUEST, ENTITY_NAME, "noexistid"));
+                () -> new BadRequestAlertException("An existing patient must have an id", Status.BAD_REQUEST, ENTITY_NAME, "no_exist_id"));
     }
     private CodeDisease getCodeDiseaseFromDBIfExisted(String diseaseId) {
         return codeDiseaseRepository.findById(diseaseId).orElseThrow(

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import java.net.URISyntaxException;
 
 public interface PatientService {
-    ResponseEntity<PatientDTO> createPatient(PatientCreateDTO patientDTO) throws URISyntaxException;
+    ResponseEntity<PatientDTO> createPatient(PatientCreateDTO patientDTO);
     ResponseEntity<PatientDTO> updatePatient(PatientUpdateDTO patientDTO);
     ResponseEntity<PatientDTO> getPatientById(Long id);
     ResponseEntity<Void> deletePatientById(Long id);

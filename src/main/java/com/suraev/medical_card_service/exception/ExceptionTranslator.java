@@ -1,13 +1,10 @@
 package com.suraev.medical_card_service.exception;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.suraev.medical_card_service.domain.entity.enums.Sex;
 import com.suraev.medical_card_service.util.HeaderUtil;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
@@ -16,10 +13,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
-import org.zalando.problem.*;
+import org.zalando.problem.DefaultProblem;
+import org.zalando.problem.Problem;
+import org.zalando.problem.ProblemBuilder;
+import org.zalando.problem.Status;
 import org.zalando.problem.spring.web.advice.AdviceTrait;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
-import org.zalando.problem.spring.web.advice.routing.MissingServletRequestParameterAdviceTrait;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 
 import javax.annotation.Nonnull;
@@ -39,24 +38,23 @@ public class ExceptionTranslator implements ProblemHandling, AdviceTrait {
     @Value(value = "${spring.application.name}")
     private String applicationName;
 
-    // TODO: сделать более читаемо переменные
     @Override
     public ResponseEntity<Problem> handleMessageNotReadableException(HttpMessageNotReadableException ex, NativeWebRequest request) {
-        String detail = "JSON parse error: " + ex.getMessage();
-        Throwable mostSpecificCause = ex.getMostSpecificCause();
-        if (mostSpecificCause instanceof InvalidFormatException ife) {
-            detail = String.format("Cannot deserialize value '%s' to %s. Accepted values are: %s",
-                    ife.getValue(), ife.getTargetType().getSimpleName(),
+        String details = "JSON parse error: " + ex.getMessage();
+        Throwable cause = ex.getMostSpecificCause();
+        if (cause instanceof InvalidFormatException e) {
+            details = String.format("Cannot deserialize value '%s' to %s. Accepted values are: %s",
+                    e.getValue(), e.getTargetType().getSimpleName(),
                     String.join(", ", Arrays.stream(Sex.values()).map(Enum::name).toArray(String[]::new)));
         }
-        if (mostSpecificCause instanceof DateTimeParseException ife) {
-            detail = String.format("Cannot deserialize the data '%s'. Required format is 'dd-MM-yyyy'",
-                    ife.getParsedString());
+        if (cause instanceof DateTimeParseException e) {
+            details = String.format("Cannot deserialize the data '%s'. Required format is 'dd-MM-yyyy'",
+                    e.getParsedString());
         }
         Problem problem = Problem.builder()
                 .withStatus(Status.BAD_REQUEST)
                 .withTitle("Invalid Input")
-                .withDetail(detail)
+                .withDetail(details)
                 .build();
         return create(ex, problem,request);
     }
